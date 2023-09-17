@@ -1,0 +1,53 @@
+
+<div style="padding: 20px;">
+<h1>List of Todo</h1>
+<div class="example-button-row">
+<button style="float: right;margin-top: -50px;" mat-raised-button  color="primary" (click)="openDialog()">Add Todo</button>
+</div>
+<hr>
+
+<input type="text" placeholder="Search Title and Status.." (keyup)="searchData($event)">
+<hr>
+
+<table *ngIf="todoSource.length > 0" mat-table [dataSource]="todoSource" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef> Title. </th>
+    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="assingDate">
+    <th mat-header-cell *matHeaderCellDef> Assing Date </th>
+    <td mat-cell *matCellDef="let element"> {{element.assingDate | date : 'dd-MM-YYYY'}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="dueDate">
+    <th mat-header-cell *matHeaderCellDef> Due Date </th>
+    <td mat-cell *matCellDef="let element"> {{element.dueDate  | date : 'dd-MM-YYYY'}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef> Status </th>
+    <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="File">
+    <th mat-header-cell *matHeaderCellDef> File </th>
+    <td mat-cell *matCellDef="let element"> <img *ngIf="element.file" [src]="element.file" style="width: 60px;height: 60px;"> </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Action">
+    <th mat-header-cell *matHeaderCellDef> Action </th>
+    <td mat-cell *matCellDef="let element;let i = index"> <a href="javascript:void(0);" (click)="openDialog(element,i)">Edit</a> | <a href="javascript:void(0);" (click)="deleteDialog(i)">Delete</a></td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<div *ngIf="todoSource.length == 0">
+  <mat-card>
+    <mat-card-content style="text-align: center;color: red;">No records available</mat-card-content>
+  </mat-card>
+</div>
+</div>

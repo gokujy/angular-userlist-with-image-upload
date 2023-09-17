@@ -1,0 +1,47 @@
+    <h1>Add New Todo</h1>
+    <hr>
+    <form [formGroup]="todoData" class="example-form">
+
+    <mat-form-field class="example-full-width">
+    <mat-label>Title</mat-label>
+    <input matInput placeholder="Title" formControlName="title" required>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+    <mat-label>Assing Date</mat-label>
+    <span style="display: flex;">
+    <input matInput [matDatepicker]="assingDate" formControlName="assingDate" required>
+    <mat-datepicker-toggle matIconSuffix [for]="assingDate"></mat-datepicker-toggle >
+    </span>
+    <mat-datepicker #assingDate></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+    <mat-label>DUE Date </mat-label> 
+    <span style="display: flex;">
+    <input matInput [matDatepicker]="dueDate" [disabled]="!todoData.controls['assingDate']['value']" formControlName="dueDate" required [min]="todoData.controls['assingDate']['value']">
+    <mat-datepicker-toggle matIconSuffix [for]="dueDate"></mat-datepicker-toggle>
+    </span>
+    <mat-datepicker #dueDate></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+    <mat-label>Status</mat-label>
+    <select matNativeControl required formControlName="status" required>
+        <option value="Active">Active</option>
+        <option value="Closed">Closed</option>
+        <option value="Archived">Archived</option>
+    </select>
+    </mat-form-field>
+
+    <br>
+
+    <input class="ng-hide" id="input-file-id" type="file" (change)="convertFile($event)"/>
+    <label for="input-file-id" class="md-button md-raised md-primary">Choose Files</label>
+    
+    <hr>
+     
+     <button *ngIf="todoDetails" [disabled]="!todoData.valid" mat-raised-button  color="primary" (click)="updateTodo()" style="margin-right: 5px;">Update</button>
+     <button *ngIf="!todoDetails" [disabled]="!todoData.valid" mat-raised-button  color="primary" (click)="submitTodo()" style="margin-right: 5px;">Save</button>
+     <button mat-raised-button color="warn" (click)="closeDialog()">Close</button>
+    </form>
